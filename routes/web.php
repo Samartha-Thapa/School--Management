@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\AdminNotificationsController;
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\DashBoardController;
 use App\Http\Controllers\LoginController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\StudentDashboardController;
+use App\Http\Controllers\StudentNotificationsController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Middleware\AuthAdmin;
 use App\Http\Middleware\AuthAdminOrStudent;
@@ -53,6 +55,7 @@ Route::middleware([AuthAdminOrStudent::class])->group(function () {
     Route::controller(ClassController::class)->group(function (){
     Route::get('/classes', 'index');
     Route::get('/classes/{class}/{section}', 'show')->name('class.show');
+    Route::post('/classes/{class}/{section}', 'store');
     });
 
     // Test Dashboard
@@ -64,22 +67,16 @@ Route::middleware([AuthAdminOrStudent::class])->group(function () {
 // Protected routes for Admin
 Route::group(['middleware' => [AuthAdmin::class]], function () {
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');    
-
-    // // For Teachers
-
-    // Route::controller(TeacherController::class)->group(function (){
-    //     Route::get('/teachers/create', 'create');
-    //     Route::post('/teachers', 'store');
-    // });
-
-    // // For Students 
-
-    // Route::controller(StudentController::class)->group(function (){
-    //     Route::get('/students/create', 'create');
-    //     Route::post('/students', 'store');
-    
-    // });
+    Route::get('/admin/notifications/create', [AdminNotificationsController::class, 'create']);
+    Route::get('/admin/notifications', [AdminNotificationsController::class, 'index']);
+    Route::get('/admin/notifications/{id}', [AdminNotificationsController::class, 'show']);
+    Route::post('/admin/notifications', [AdminNotificationsController::class, 'store']);
 });
+
+Route::get('/students/notifications', [StudentNotificationsController::class, 'index']);
+Route::get('/students/notifications/create', [StudentNotificationsController::class, 'create']);
+Route::post('/students/notifications', [StudentNotificationsController::class, 'store']);
+Route::get('/students/notifications/{id}', [StudentNotificationsController::class, 'show']);
 
 // Protected routes for Students
 
@@ -95,3 +92,4 @@ Route::post('/student/logout', [StudentDashboardController::class, 'logout'])->n
 Route::get('/login', function () {
    return view('auth.login');
 })->name('login');
+

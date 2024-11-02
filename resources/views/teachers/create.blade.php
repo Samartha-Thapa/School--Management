@@ -2,7 +2,7 @@
     <x-teachers-nav />
 
     <div class="hidden md:block">
-    <form action="/teachers" method="POST" class="ml-16 mt-5 flex flex-col">
+    <form action="/teachers" method="POST" class="ml-16 mt-5 flex flex-col dark:text-white">
             @csrf
             <div class="flex flex-col flex-wrap w-full max-w-lg mt-5">
         

@@ -12,6 +12,7 @@
         "jenssegers/agent": "^2.6",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
+        "livewire/livewire": "^3.5",
         "owenvoke/blade-fontawesome": "^2.6",
         "troccoli/blade-health-icons": "^3.0"
     },
